@@ -1,0 +1,66 @@
+{
+    "root": true,
+    "plugins": [
+        "@typescript-eslint",
+        "jest"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "env": {
+        "es6": true,
+        "browser": true,
+        "jest/globals": true
+    },
+    "extends": [
+        "airbnb",
+        "plugin:prettier/recommended"
+    ],
+    "rules": {
+        "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx", ".ts", ".tsx"] }],
+        "react/jsx-indent": 4,
+        "react/button-has-type": "off",
+        "prettier/prettier": [
+            "error",
+            {
+                "printWidth": 120,
+                "useTabs": false,
+                "semi": true,
+                "singleQuote": true,
+                "tabWidth": 4,
+                "trailingComma": "es5",
+                "bracketSpacing": true,
+                "jsxBracketSameLine": true,
+                "parser": "typescript"
+            }
+        ],
+        "no-use-before-define": "off",
+        "import/prefer-default-export": "off"
+    },
+    "settings": {
+        "import/resolver": {
+            "node": {
+                "paths": ["src"],
+                "extensions": [".js", ".jsx", ".ts", ".tsx"]
+            }
+        }
+    },
+    "parserOptions": {
+        "sourceType": "module",
+        "ecmaFeatures": {
+            "jsx": true
+        }
+    },
+    "overrides": [
+        {
+            "files": ["**/*.d.ts"],
+            "rules": {
+                "spaced-comment": "off"
+            }
+        },
+        {
+            "files": ["**/*.ts", "**/*.tsx"],
+            "rules": {
+                "no-unused-vars": "off"
+            }
+        }
+    ]
+}

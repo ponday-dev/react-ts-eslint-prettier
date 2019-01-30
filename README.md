@@ -1,44 +1,130 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# create-react-app + typescript-eslint + prettier
 
-## Available Scripts
+## 構築手順メモ
 
-In the project directory, you can run:
+依存関係をインストール
 
-### `npm start`
+```
+npm i -S \
+    @emotion/{core,styled} \
+    history \
+    react-redux \
+    react-router-dom \
+    redux \
+    redux-thunk
+```
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+```
+npm i -D \
+    @types/{jest,react-redux,react-router-dom} \
+    @typescript-eslint/{eslint-plugin,parser,typescript-estree} \
+    eslint-config-airbnb \
+    eslint-config-prettier \
+    eslint-import-resolver-node \
+    eslint-plugin-jest \
+    eslint-plugin-prettier \
+    prettier
+```
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+.eslintrc.json を作成
 
-### `npm test`
+```json
+{
+  "root": true,
+  "plugins": ["@typescript-eslint", "jest"],
+  "parser": "@typescript-eslint/parser",
+  "env": {
+    "es6": true,
+    "browser": true,
+    "jest/globals": true
+  },
+  "extends": ["airbnb", "plugin:prettier/recommended"],
+  "rules": {
+    "react/jsx-filename-extension": [
+      1,
+      { "extensions": [".js", ".jsx", ".ts", ".tsx"] }
+    ],
+    "react/jsx-indent": 4,
+    "react/button-has-type": "off",
+    "prettier/prettier": [
+      "error",
+      {
+        "printWidth": 120,
+        "useTabs": false,
+        "semi": true,
+        "singleQuote": true,
+        "tabWidth": 4,
+        "trailingComma": "es5",
+        "bracketSpacing": true,
+        "jsxBracketSameLine": true,
+        "parser": "typescript"
+      }
+    ],
+    "no-use-before-define": "off",
+    "import/prefer-default-export": "off"
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "paths": ["src"],
+        "extensions": [".js", ".jsx", ".ts", ".tsx"]
+      }
+    }
+  },
+  "parserOptions": {
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "overrides": [
+    {
+      "files": ["**/*.d.ts"],
+      "rules": {
+        "spaced-comment": "off"
+      }
+    },
+    {
+      "files": ["**/*.ts", "**/*.tsx"],
+      "rules": {
+        "no-unused-vars": "off"
+      }
+    }
+  ]
+}
+```
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+package.json に lint タスクを追加
 
-### `npm run build`
+```json
+"scripts": {
+    ...
+    "lint": "eslint -c ./.eslintrc.json --fix 'src/**/*.{ts,tsx}'"
+}
+```
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### 以下推奨
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+VSCode の拡張機能を追加して、ファイル保存時に lint、コードフォーマットを実行する。（ユーザー設定でもワークスペース設定でも可）
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+#### ESLint
 
-### `npm run eject`
+- VSCode 拡張をインストール
+- 設定画面で[拡張機能]>[ESLint]を開き、Validate を以下のとおり設定（設定ファイルが開くので直接追記）
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+```json
+"eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
+]
+```
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+#### Prettier
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+- Prettier 拡張をインストール
+- 設定画面で[テキストエディター]>[フォーマット]を開き次を設定
+  - 「Format On Save」を有効化
+  - 「Javascript > Format」を有効化
+- [拡張機能]>[Prettier]を開き、「Prettier: Eslint Integration」を有効化
