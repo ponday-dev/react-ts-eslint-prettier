@@ -42,6 +42,7 @@
     "@typescript-eslint/eslint-plugin": "^1.1.0",
     "@typescript-eslint/parser": "^1.1.0",
     "@typescript-eslint/typescript-estree": "^1.1.0",
+    "enzyme": "^3.8.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-config-prettier": "^4.0.0",
     "eslint-import-resolver-node": "^0.3.2",
